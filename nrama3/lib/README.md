@@ -1,0 +1,1 @@
+This folder contains 3-rd party dependencies that aren't npm modules 
