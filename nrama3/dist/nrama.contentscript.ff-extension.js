@@ -23,6 +23,8 @@ self.port.on('nrama_init', function(user_info) {
     if( $('#_nrama_status').length > 0 ) {
       // yes, nrama already loaded (or loading)
       console.log('nrama already loaded (or attempted)');
+      var page_id = init.get_page_id(window);
+      self.port.emit('nrama_already_loaded_in_this_tab', page_id);
       // throw new Error("nrama: cannot load twice");
     } else {
       // no sign nrama is already loaded, can carry on ...

@@ -47616,6 +47616,8 @@ self.port.on('nrama_init', function(user_info) {
     if( $('#_nrama_status').length > 0 ) {
       // yes, nrama already loaded (or loading)
       console.log('nrama already loaded (or attempted)');
+      var page_id = init.get_page_id(window);
+      self.port.emit('nrama_already_loaded_in_this_tab', page_id);
       // throw new Error("nrama: cannot load twice");
     } else {
       // no sign nrama is already loaded, can carry on ...
@@ -47653,7 +47655,7 @@ self.port.on('nrama_init', function(user_info) {
  * 
  * Use like:
  *   var nrama_init = require('./init').nrama_init;
- *   nrama_init(window, document).then(function(){ ... })
+ *   nrama_init(window, document).then(function(){ ... }).catch(function(){ ... })
  */
 
 
@@ -47801,20 +47803,26 @@ var _init_events = function(window, document) {
   
 };
 
-
-
+/**
+ * returns a string that uniquely identifies the current url
+ * (currently this is the url without trailing slash)
+ */ 
+var get_page_id = function(window) {
+  var page_id = window.location.protocol+"//"+window.location.host+window.location.pathname;  //the url with no ?query or #anchor details
+  //remove trailing slash
+  var last = page_id.length-1;
+  if( page_id[last] === '/' ) {
+    page_id = page_id.slice(0,last);
+  }
+  return page_id
+}
+exports.get_page_id = get_page_id;
 
 var _init = function(window, document){
   return new Promise(function(fulfill, reject){
     
     // -- set page_id
-    var page_id = window.location.protocol+"//"+window.location.host+window.location.pathname;  //the url with no ?query or #anchor details
-    //remove trailing slash
-    var last = page_id.length-1;
-    if( page_id[last] === '/' ) {
-      page_id = page_id.slice(0,last);
-    }
-    settings.set('page_id', page_id);
+    settings.set('page_id', get_page_id(window));
     
     /**
      * -- set root_node
@@ -47827,32 +47835,44 @@ var _init = function(window, document){
     
     rangy.init();
 
-    log('nrama: starting ...');
+    log('nrama version 0.1.3: starting ...');
     
     _init_events(window, document);
     
-    ui.dialogs.login_if_necessary().then(function(){
-      //_.defer prevents this js blocking the thread (it forces wait until callstack cleared before running)
-      _.defer(quotes.load, settings.get('page_id'), function(error, data){
-        _.defer(notes.load, settings.get('page_id'), function(error, data){
-          if( !error ) {
-            fulfill(data);
-          } else {
-            reject(error);
-          }
-        });
-      });
-    }).then(fulfill).catch(reject);
+    /**
+     * TODO: this is awkward mix of promises, defer and callbacks
+     */ 
+    ui.dialogs.login_if_necessary().then(load_notes_and_quotes).then(fulfill).catch(reject);
     
   });
 };
 
-
+/**
+ * load notes and quotes for a page.
+ * You don't typically need to call this as it is called by the main nrama_init (in _init);
+ * if you are going to use it, make sure nrama is already initiated and the user logged in.
+ */
+var load_notes_and_quotes = function(){
+  return new Promise(function(fulfill, reject){
+    //_.defer prevents this js blocking the thread (it forces wait until callstack cleared before running)
+    _.defer(quotes.load, settings.get('page_id'), function(error, data){
+      _.defer(notes.load, settings.get('page_id'), function(error, data){
+        if( !error ) {
+          return fulfill(data);  //
+        } else {
+          return reject(error);
+        }
+      });
+    });
+  });  
+} 
+exports.load_notes_and_quotes = load_notes_and_quotes;
     
 
 
 /**
  * wrap _init so that it runs only when DOM loaded 
+ * NB: be careful not to call this twice (currently no safeguards)!
  */
 var nrama_init = function(window, document){
   return new Promise(function(fulfill, reject){
