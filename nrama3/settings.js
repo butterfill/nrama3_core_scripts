@@ -36,7 +36,7 @@ var _settings = {
   db_url: ( use_localhost ?
               'http://localhost:5984/nrama/'
             :
-              'https://noteorama.iriscouch.com/nrama/'
+              'https://notes.butterfill.com/nrama/'
           ),
   // this is used to build requests, change this if redirecting:
   db_url_base : '_design/nrama', 

@@ -2,13 +2,13 @@
  * This is a version of nrama that can be used with a bookmarklet
  *
  * To run as bookmarklet:
- *   javascript:(function(){_NRAMA_USER='steve';document.body.appendChild(document.createElement('script')).src='http://noteorama.iriscouch.com/nrama/_design/nrama/bkmrklt/nrama.bookmarklet.bundle.js'; })();
+ *   javascript:(function(){_NRAMA_USER='steve';document.body.appendChild(document.createElement('script')).src='https://notes.butterfill.com/nrama/_design/nrama/bkmrklt/nrama3.bookmarklet.bundle.js'; })();
  *
  * To run from localhost (nb _NRAMA_LOCAL = load everything from localhost)
- *   javascript:(function(){_NRAMA_LOCAL=true;_NRAMA_USER='steve';document.body.appendChild(document.createElement('script')).src='http://localhost:5984/nrama/_design/nrama/bkmrklt/nrama.bookmarklet.bundle.js'; })();
+ *   javascript:(function(){_NRAMA_LOCAL=true;_NRAMA_USER='steve';document.body.appendChild(document.createElement('script')).src='http://localhost:5984/nrama/_design/nrama/bkmrklt/nrama3.bookmarklet.bundle.js'; })();
  *
  * to load from development server :
- *   javascript:(function(){_NRAMA_USER='steve';document.body.appendChild(document.createElement('script')).src='http://localhost:8085/nrama.bookmarklet.bundle.js'; })();
+ *   javascript:(function(){_NRAMA_USER='steve';document.body.appendChild(document.createElement('script')).src='http://localhost:8085/nrama3.bookmarklet.bundle.js'; })();
  *
  */
 
