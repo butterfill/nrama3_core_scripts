@@ -2,7 +2,7 @@
 
 browserify nrama.bookmarklet.js -o nrama.bookmarklet.bundle_to_compile.js 
 
-java -jar compiler.jar --js nrama.bookmarklet.bundle_to_compile.js  --js_output_file nrama.bookmarklet.bundle.js 
+java -jar compiler.jar --js nrama.bookmarklet.bundle_to_compile.js  --js_output_file ../../../nrama2/server/nrama/bkmrklt/nrama.bookmarklet.bundle.js 
 
 
 

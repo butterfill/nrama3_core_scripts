@@ -1,8 +1,21 @@
 /**
  * This is a version of nrama that can be used with a bookmarklet
  *
+ * DOES NOT WORK BECAUSE OF CORS
+ *
+ * ATTEMPT TO USE WITH xdomain failed! https://github.com/jpillora/xdomain 
+ *
  * To run as bookmarklet:
- *   javascript:(function(){_NRAMA_USER='steve';document.body.appendChild(document.createElement('script')).src='https://notes.butterfill.com/nrama/_design/nrama/bkmrklt/nrama3.bookmarklet.bundle.js'; })();
+     document.body.appendChild(document.createElement('script')).src='//cdn.rawgit.com/jpillora/xdomain/0.7.4/dist/xdomain.min.js';
+     xdomain.debug = true;
+
+     xdomain.slaves({
+       'https://notes.butterfill.com':'///nrama/_design/nrama/bkmrklt/xdomain-proxy.html',
+       'https://notes.butterfill.com:':'/nrama/_design/nrama/bkmrklt/xdomain-proxy.html',
+       'http://notes.butterfill.com':'/nrama/_design/nrama/bkmrklt/xdomain-proxy.html',
+       'http://notes.butterfill.com:':'/nrama/_design/nrama/bkmrklt/xdomain-proxy.html'
+     });
+     javascript:(function(){_NRAMA_USER='steve';document.body.appendChild(document.createElement('script')).src='https://notes.butterfill.com/nrama/_design/nrama/bkmrklt/nrama.bookmarklet.bundle.js'; })();
  *
  * To run from localhost (nb _NRAMA_LOCAL = load everything from localhost)
  *   javascript:(function(){_NRAMA_LOCAL=true;_NRAMA_USER='steve';document.body.appendChild(document.createElement('script')).src='http://localhost:5984/nrama/_design/nrama/bkmrklt/nrama3.bookmarklet.bundle.js'; })();
@@ -11,6 +24,23 @@
  *   javascript:(function(){_NRAMA_USER='steve';document.body.appendChild(document.createElement('script')).src='http://localhost:8085/nrama3.bookmarklet.bundle.js'; })();
  *
  */
+
+
+// configure xdomain
+
+// var xdomain = require("xdomain").xdomain;
+//
+// xdomain.debug = true;
+//
+// xdomain.slaves({
+  // 'https://notes.butterfill.com':'//nrama/_design/nrama/bkmrklt/xdomain-proxy.html',
+  // 'https://notes.butterfill.com:':'//nrama/_design/nrama/bkmrklt/xdomain-proxy.html',
+  // 'http://notes.butterfill.com':'//nrama/_design/nrama/bkmrklt/xdomain-proxy.html',
+  // 'http://notes.butterfill.com:':'//nrama/_design/nrama/bkmrklt/xdomain-proxy.html'
+// });
+
+
+// main nrama code
 
 var init = require('../init');
 var settings = require('../settings');

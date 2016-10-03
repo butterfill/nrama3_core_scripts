@@ -1,0 +1,22 @@
+{
+  "name": "nrama3_client_core",
+  "version": "1.0.0",
+  "description": "core_part_of_nrama_client",
+  "main": "_debug.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/butterfill/nrama3_core_scripts.git"
+  },
+  "author": "Stephen A. Butterfill",
+  "license": "GPL 3+",
+  "bugs": {
+    "url": "https://github.com/butterfill/nrama3_core_scripts/issues"
+  },
+  "homepage": "https://github.com/butterfill/nrama3_core_scripts#readme"
+}

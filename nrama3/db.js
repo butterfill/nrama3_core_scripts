@@ -23,6 +23,8 @@
  * authentification, not sure why)!
  */
 
+
+
 // npm modules (should be listed in package.json)
 var $ = require('jquery');    // for $.ajax and events
 var pouchdb = require('pouchdb');
@@ -209,6 +211,7 @@ exports.login = login;
 var _request = function (options, callback, which_ajax) {
   options.complete = onComplete(options, callback);
   options.dataType = 'json';
+  console.log(options);
   if( typeof(which_ajax) === 'undefined' || which_ajax === 'jquery' ) {
     $.ajax(options, callback);
   } else {
